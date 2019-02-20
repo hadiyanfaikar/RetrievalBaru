@@ -29,6 +29,14 @@ public class InvertedIndex {
         this.dictionary = dictionary;
     }
 
+    public ArrayList<Document> getListOfDocument() {
+        return listOfDocument;
+    }
+
+    public void setListOfDocument(ArrayList<Document> listOfDocument) {
+        this.listOfDocument = listOfDocument;
+    }
+
     public void addNewDocument(Document document) {
         listOfDocument.add(document);
     }
@@ -59,6 +67,10 @@ public class InvertedIndex {
         //urutkan
         Collections.sort(list);
         return list;
+    }
+
+    public ArrayList<Posting> search(String query) {
+        return null;
     }
 
     public void MakeDictionary() {
