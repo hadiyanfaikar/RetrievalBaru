@@ -1,0 +1,47 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+package Model;
+
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Iterator;
+import java.util.List;
+import java.util.ListIterator;
+import java.util.function.Consumer;
+
+public class InvertedIndex {
+
+    private ArrayList<Document> listOfDocument = new ArrayList<Document>();
+
+    public InvertedIndex() {
+    }
+
+    public void addNewDocument(Document document) {
+        listOfDocument.add(document);
+    }
+
+    public ArrayList<Posting> getUnsortedPostingList() {
+        // siapkan posting List
+        ArrayList<Posting> list = new ArrayList<Posting>();
+        // buat node Posting utk listofdocument
+        for (int i = 0; i < listOfDocument.size(); i++) {
+            // buat listOfTerm dari document ke -i
+            String[] termResult = listOfDocument.get(i).getListofTerm();
+            // loop sebanyak term dari document ke i
+            for (int j = 0; j < termResult.length; j++) {
+                // buat object tempPosting
+                Posting tempPosting = new Posting(termResult[j],
+                        listOfDocument.get(i));
+                list.add(tempPosting);
+            }
+        }
+        return list;
+    }
+
+    public ArrayList<Posting> getSortedPostingList() {
+        return null;
+    }
+}
