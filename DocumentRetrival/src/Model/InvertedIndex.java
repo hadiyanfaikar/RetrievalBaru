@@ -78,7 +78,7 @@ public class InvertedIndex {
         return null;
     }
 
-    private ArrayList<Posting> SearchOneWord(String word) {
+    public ArrayList<Posting> SearchOneWord(String word) {
         Term tempTerm = new Term(word);
         if (getDictionary().isEmpty()) {
             return null;
@@ -91,6 +91,10 @@ public class InvertedIndex {
                 return dictionary.get(PositionTerm).getPostingList();
             }
         }
+    }
+
+    public ArrayList<Posting> Intersection(ArrayList<Posting> p1, ArrayList<Posting> p2) {
+        return null;
     }
 
     public void MakeDictionary() {
@@ -132,6 +136,5 @@ public class InvertedIndex {
             }
 
         }
-
     }
 }
