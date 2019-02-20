@@ -10,12 +10,15 @@ public class Term {
     public Term(String term) {
         this.term = term;
     }
-    public int getNumberOfTerm(){
+
+    public int getNumberOfTerm() {
         return PostingList.size();
     }
+
     public String getTerm() {
         return term;
     }
+
     public void setTerm(String term) {
         this.term = term;
     }
