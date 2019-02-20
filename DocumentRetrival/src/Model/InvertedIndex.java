@@ -14,33 +14,33 @@ import java.util.ListIterator;
 import java.util.function.Consumer;
 
 public class InvertedIndex {
-
+    
     private ArrayList<Document> listOfDocument = new ArrayList<Document>();
     private ArrayList<Term> dictionary = new ArrayList<Term>();
-
+    
     public InvertedIndex() {
     }
-
+    
     public ArrayList<Term> getDictionary() {
         return dictionary;
     }
-
+    
     public void setDictionary(ArrayList<Term> dictionary) {
         this.dictionary = dictionary;
     }
-
+    
     public ArrayList<Document> getListOfDocument() {
         return listOfDocument;
     }
-
+    
     public void setListOfDocument(ArrayList<Document> listOfDocument) {
         this.listOfDocument = listOfDocument;
     }
-
+    
     public void addNewDocument(Document document) {
         listOfDocument.add(document);
     }
-
+    
     public ArrayList<Posting> getUnsortedPostingList() {
         // siapkan posting List
         ArrayList<Posting> list = new ArrayList<Posting>();
@@ -58,7 +58,7 @@ public class InvertedIndex {
         }
         return list;
     }
-
+    
     public ArrayList<Posting> getSortedPostingList() {
         //siapkan posting list
         ArrayList<Posting> list = new ArrayList<Posting>();
@@ -68,11 +68,25 @@ public class InvertedIndex {
         Collections.sort(list);
         return list;
     }
-
+    
     public ArrayList<Posting> search(String query) {
+        MakeDictionary();
         return null;
     }
-
+    
+    private ArrayList<Posting> SearchOneWord(String word) {
+        Term tempTerm = new Term(word);
+        if (getDictionary().isEmpty()) {
+            return null;
+        } else {
+            int PositionTerm = Collections.binarySearch(dictionary, tempTerm);
+            if (PositionTerm < 0) {
+                
+            }
+        }
+        return null;
+    }
+    
     public void MakeDictionary() {
         // buat posting list term terurut
         ArrayList<Posting> list = getSortedPostingList();
@@ -110,8 +124,8 @@ public class InvertedIndex {
                 // urutkan term dictionary
                 Collections.sort(getDictionary());
             }
-
+            
         }
-
+        
     }
 }
