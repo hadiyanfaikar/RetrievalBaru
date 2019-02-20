@@ -16,8 +16,17 @@ import java.util.function.Consumer;
 public class InvertedIndex {
 
     private ArrayList<Document> listOfDocument = new ArrayList<Document>();
+    private ArrayList<Term> dictionary = new ArrayList<Term>();
 
     public InvertedIndex() {
+    }
+
+    public ArrayList<Term> getDictionary() {
+        return dictionary;
+    }
+
+    public void setDictionary(ArrayList<Term> dictionary) {
+        this.dictionary = dictionary;
     }
 
     public void addNewDocument(Document document) {
@@ -51,7 +60,46 @@ public class InvertedIndex {
         Collections.sort(list);
         return list;
     }
-    public void MakeDictionary(){
-        
+
+    public void MakeDictionary() {
+        // buat posting list term terurut
+        ArrayList<Posting> list = getSortedPostingList();
+        // looping buat list of term (dictionary)
+        for (int i = 0; i < list.size(); i++) {
+            // cek dictionary kosong?
+            if (getDictionary().isEmpty()) {
+                // buat term
+                Term term = new Term(list.get(i).getTerm());
+                // tambah posting ke posting list utk term ini
+                term.getPostingList().add(list.get(i));
+                // tambah ke dictionary
+                getDictionary().add(term);
+            } else {
+                // dictionary sudah ada isinya
+                Term tempTerm = new Term(list.get(i).getTerm());
+                // pembandingan apakah term sudah ada atau belum
+                // luaran dari binarysearch adalah posisi
+                int position = Collections.binarySearch(getDictionary(), tempTerm);
+                if (position < 0) {
+                    // term baru
+                    // tambah postinglist ke term
+                    tempTerm.getPostingList().add(list.get(i));
+                    // tambahkan term ke dictionary
+                    getDictionary().add(tempTerm);
+                } else {
+                    // term ada
+                    // tambahkan postinglist saja dari existing term
+                    getDictionary().get(position).
+                            getPostingList().add(list.get(i));
+                    // urutkan posting list
+                    Collections.sort(getDictionary().get(position)
+                            .getPostingList());
+                }
+                // urutkan term dictionary
+                Collections.sort(getDictionary());
+            }
+
+        }
+
     }
 }
