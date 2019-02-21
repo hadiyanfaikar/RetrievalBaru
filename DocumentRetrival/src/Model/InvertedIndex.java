@@ -94,7 +94,17 @@ public class InvertedIndex {
     }
 
     public ArrayList<Posting> Intersection(ArrayList<Posting> p1, ArrayList<Posting> p2) {
-        return null;
+        ArrayList<Posting> list1 = new ArrayList<Posting>();
+        for (Posting posting : p1) {
+            list1.add(posting);
+        }
+        ArrayList<Posting> list2 = new ArrayList<Posting>();
+        for (Posting posting : p2) {
+            if (list2.contains(p2)) {
+                list2.addAll(p2);
+            }
+        }
+        return Intersection(p1, p2);
     }
 
     public void MakeDictionary() {
