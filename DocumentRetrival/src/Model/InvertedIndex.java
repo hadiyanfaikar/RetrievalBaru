@@ -94,17 +94,61 @@ public class InvertedIndex {
     }
 
     public ArrayList<Posting> Intersection(ArrayList<Posting> p1, ArrayList<Posting> p2) {
-        ArrayList<Posting> list1 = new ArrayList<Posting>();
-        for (Posting posting : p1) {
-            list1.add(posting);
+        if (p1 == null || p2 == null) {
+            // mengembalikan posting p1 atau p2
+            return new ArrayList<>();
         }
-        ArrayList<Posting> list2 = new ArrayList<Posting>();
-        for (Posting posting : p2) {
-            if (list2.contains(p2)) {
-                list2.addAll(p2);
+        // menyiapkan posting tempPosting
+        ArrayList<Posting> tempPostings = new ArrayList<>();
+        // menyiapkan variable p1Index dan p2Index
+        int p1Index = 0;
+        int p2Index = 0;
+
+        // menyiapkan variable post1 dan post2 bertipe Posting 
+        Posting post1 = p1.get(p1Index);
+        Posting post2 = p2.get(p2Index);
+
+        while (true) {
+            // mengecek id document post1 = id document post2?
+            if (post1.getDocument().getId() == post2.getDocument().getId()) {
+                try {
+                    // menambahkan post1 ke tempPosting
+                    tempPostings.add(post1);
+                    // p1Index dan p2Index bertambah 1
+                    p1Index++;
+                    p2Index++;
+
+                    post1 = p1.get(p1Index);
+                    post2 = p2.get(p2Index);
+                } catch (Exception ex) {
+                    // menghentikan program
+                    break;
+                }
+
+            } // mengecek id document post1 < id document post2?
+            else if (post1.getDocument().getId() < post2.getDocument().getId()) {
+                try {
+                    // p1Index bertambah 1
+                    p1Index++;
+                    post1 = p1.get(p1Index);
+                } catch (Exception ex) {
+                    // menghentikan program
+                    break;
+                }
+
+            } else {
+                try {
+                    // p2Index bertambah 1
+                    p2Index++;
+                    post2 = p2.get(p2Index);
+                } catch (Exception ex) {
+                    // menghentikan program
+                    break;
+                }
             }
         }
-        return Intersection(p1, p2);
+        // mengembalikan tempPosting
+        return tempPostings;
     }
 
     public void MakeDictionary() {
