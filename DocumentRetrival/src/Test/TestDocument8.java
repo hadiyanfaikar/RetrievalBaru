@@ -28,13 +28,12 @@ public class TestDocument8 {
         index.MakeDictionary();
         ArrayList<Posting> result = index.SearchOneWord("computer");
         // panggil fungsi search
-        ArrayList<Posting> result1 = index.SearchOneWord("machine");
+        ArrayList<Posting> result1 = index.SearchOneWord("architecture");
         // pangging fungsi instersect
         ArrayList<Posting> join = index.Intersection(result1, result);
         // tampilkan isi document dan id-nya
         for (int i = 0;
-                i < join.size();
-                i++) {
+                i < join.size(); i++) {
             System.out.println("id_doc = " + join.get(i).getDocument().getId());
             System.out.println(join.get(i).getDocument().getContent());
         }
