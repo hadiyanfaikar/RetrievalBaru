@@ -22,18 +22,18 @@ public class TestDocument7 {
         index.addNewDocument(doc2);
         index.addNewDocument(doc3);
         // panggil function sorted Posting List
-        ArrayList<Posting> result = index.search("machine");
+        ArrayList<Posting> result = index.Search("computer");
         // tampilkan isi document dan id-nya
         for (int i = 0; i < result.size(); i++) {
             System.out.println("idDoc=" + result.get(i).getDocument().getId());
             System.out.println(result.get(i).getDocument().getContent());
         }
-        ArrayList<Posting> result1 = index.search("machine learning");
-        // tampilkan isi document dan id-nya
-        for (int i = 0; i < result1.size(); i++) {
-            System.out.println("idDoc=" + result.get(i).getDocument().getId());
-            System.out.println(result1.get(i).getDocument().getContent());
-
-        }
+//        ArrayList<Posting> result1 = index.search("machine learning");
+//        // tampilkan isi document dan id-nya
+//        for (int i = 0; i < result1.size(); i++) {
+//            System.out.println("idDoc=" + result.get(i).getDocument().getId());
+//            System.out.println(result1.get(i).getDocument().getContent());
+//
+//        }
     }
 }

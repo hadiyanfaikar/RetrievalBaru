@@ -30,7 +30,7 @@ public class TestDocument8 {
         // panggil fungsi search
         ArrayList<Posting> result1 = index.SearchOneWord("architecture");
         // pangging fungsi instersect
-        ArrayList<Posting> join = index.Intersection(result1, result);
+        ArrayList<Posting> join = index.Intersection(result1 , result);
         // tampilkan isi document dan id-nya
         for (int i = 0;
                 i < join.size(); i++) {

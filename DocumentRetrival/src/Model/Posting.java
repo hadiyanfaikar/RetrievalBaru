@@ -1,10 +1,18 @@
-
 package Model;
 
 public class Posting implements Comparable<Posting> {
 
     private String term;
     private Document document;
+    private int NumberOfTerm = 1;
+
+    public int getNumberOfTerm() {
+        return NumberOfTerm;
+    }
+
+    public void setNumberOfTerm(int NumberOfTerm) {
+        this.NumberOfTerm = NumberOfTerm;
+    }
 
     public Posting(Document document) {
         this.document = document;
