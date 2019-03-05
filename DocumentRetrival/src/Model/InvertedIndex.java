@@ -1,4 +1,3 @@
-
 package Model;
 
 import java.util.ArrayList;
@@ -81,7 +80,6 @@ public class InvertedIndex {
         return list;
     }
 
-    
     public ArrayList<Posting> Search(String query) {
         // buat index/dictionary
 //        makeDictionary();
@@ -264,16 +262,22 @@ public class InvertedIndex {
         this.dictionary = dictionary;
     }
 
-   
     public int getDocumentFrequency(String term) {
+        Term tempTerm = new Term(term);
+        int index = Collections.binarySearch(dictionary, tempTerm);
+        if (index > 0) {
+            ArrayList<Posting> tempPosting = dictionary.get(index).getPostingList();
+        } else {
+
+        }
         return 0;
     }
 
-    
     public double getInverseDocumentFrequency(String term) {
         return 0.0;
     }
-    public int getTermFrequency(String term ,int id){
+
+    public int getTermFrequency(String term, int id) {
         return 0;
     }
 }
