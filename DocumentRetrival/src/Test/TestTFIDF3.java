@@ -11,7 +11,7 @@ import Model.Posting;
 import Model.Term;
 import java.util.ArrayList;
 
-public class TestIDF3 {
+public class TestTFIDF3 {
 
     public static void main(String[] args) {
         // seting dokumen

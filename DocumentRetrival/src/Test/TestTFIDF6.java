@@ -6,7 +6,7 @@ import Model.Posting;
 import Model.Term;
 import java.util.ArrayList;
 
-public class TestIDF6 {
+public class TestTFIDF6 {
 
     public static void main(String[] args) {
         // seting dokumen

@@ -264,20 +264,42 @@ public class InvertedIndex {
 
     public int getDocumentFrequency(String term) {
         Term tempTerm = new Term(term);
+        // cek apakah term ada di dictionary
         int index = Collections.binarySearch(dictionary, tempTerm);
         if (index > 0) {
-            ArrayList<Posting> tempPosting = dictionary.get(index).getPostingList();
+            // term ada
+            // ambil ArrayList<Posting> dari object term
+            ArrayList<Posting> tempPosting = dictionary.get(index)
+                    .getPostingList();
+            // return ukuran posting list
+            return tempPosting.size();
         } else {
-
+            // term tidak ada
+            return -1;
         }
-        return 0;
     }
 
     public double getInverseDocumentFrequency(String term) {
-        return 0.0;
+        Term tempTerm = new Term(term);
+        // cek apakah term ada di dictionary
+        int index = Collections.binarySearch(dictionary, tempTerm);
+        if (index > 0) {
+            // term ada
+            // jumlah total dokumen
+            int N = listOfDocument.size();
+            // jumlah dokumen dengan term i
+            int ni = getDocumentFrequency(term);
+            // idf = log10(N/ni)
+            return Math.log10(N / ni);
+        } else {
+            // term tidak ada
+            // nilai idf = 0
+            return 0.0;
+        }
     }
 
-    public int getTermFrequency(String term, int id) {
+    public int getTermFrequency(String term, int idDoc) {
+        
         return 0;
     }
 }

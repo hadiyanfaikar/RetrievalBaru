@@ -1,4 +1,3 @@
-
 package Test;
 
 import Model.Document;
@@ -7,7 +6,7 @@ import Model.Posting;
 import Model.Term;
 import java.util.ArrayList;
 
-public class TestIDF5 {
+public class TestTFIDF4 {
 
     public static void main(String[] args) {
         // seting dokumen
@@ -40,11 +39,6 @@ public class TestIDF5 {
         String tempString = "silver";
         int result2 = index.getDocumentFrequency(tempString);
         System.out.println("Number of Doc with " + tempString + " is " + result2);
-
-        // idf
-        String tempString1 = "silver";
-        double result3 = index.getDocumentFrequency(tempString1);
-        System.out.println("IDF of " + tempString1 + " is " + result3);
 
     }
 }

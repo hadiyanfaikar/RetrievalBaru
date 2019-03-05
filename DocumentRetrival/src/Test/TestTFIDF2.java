@@ -7,7 +7,7 @@ import Model.InvertedIndex;
 import Model.Posting;
 import Model.Term;
 
-public class TestIDF2 {
+public class TestTFIDF2 {
 
     public static void main(String[] args) {
 

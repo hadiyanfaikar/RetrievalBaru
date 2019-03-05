@@ -5,7 +5,7 @@ import Model.InvertedIndex;
 import Model.Posting;
 import java.util.ArrayList;
 
-public class TestIDF1 {
+public class TestTFIDF1 {
 
     public static void main(String[] args) {
         Document doc1 = new Document(1, "Shipment of gold damaged in a fire");
