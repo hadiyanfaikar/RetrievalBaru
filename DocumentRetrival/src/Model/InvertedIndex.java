@@ -14,11 +14,14 @@ public class InvertedIndex {
     private ArrayList<Term> dictionary = new ArrayList<Term>();
 
     public InvertedIndex() {
+        this.dictionary = new ArrayList<>();
+        this.listOfDocument = new ArrayList<>();
     }
 
     public void addNewDocument(Document document) {
         getListOfDocument().add(document);
     }
+    
 
     public ArrayList<Posting> getUnsortedPostingList() {
         // cek untuk term yang muncul lebih dari 1 kali
@@ -299,7 +302,21 @@ public class InvertedIndex {
     }
 
     public int getTermFrequency(String term, int idDoc) {
+        Document doc = new Document();
+        doc.setId(idDoc);
         
+        int Posting = Collections.binarySearch(listOfDocument, doc);
+        if (Posting >= 0) {
+            ArrayList<Posting> tempPosting = listOfDocument.get(Posting).getListOfPosting();
+            Posting posting = new Posting();
+            posting.setTerm(term);
+            int postingIndex = Collections.binarySearch(tempPosting, posting);
+            if (postingIndex >= 0) {
+                return tempPosting.get(postingIndex).getNumberOfTerm();
+            }
+            return 0;
+        }
+
         return 0;
     }
 }

@@ -14,7 +14,7 @@ import java.util.StringTokenizer;
  *
  * @author admin
  */
-public class Document {
+public class Document implements Comparable<Document> {
 
     private int id;
     private String content;
@@ -96,4 +96,10 @@ public class Document {
         }
         return result;
     }
+
+    @Override
+    public int compareTo(Document doc) {
+        return id - doc.getId();
+    }
+
 }

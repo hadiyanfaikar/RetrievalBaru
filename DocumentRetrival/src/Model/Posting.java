@@ -5,6 +5,11 @@ public class Posting implements Comparable<Posting> {
     private String term;
     private Document document;
     private int NumberOfTerm = 1;
+    private double weight = 0;
+
+    public Posting() {
+
+    }
 
     public int getNumberOfTerm() {
         return NumberOfTerm;
