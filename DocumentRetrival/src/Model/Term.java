@@ -2,13 +2,24 @@ package Model;
 
 import java.util.ArrayList;
 
-public class Term implements Comparable<Term>{
+public class Term implements Comparable<Term> {
 
     private String term;
     private ArrayList<Posting> PostingList = new ArrayList<Posting>();
+    private PostingList TermList;
+
+    public Term() {
+        TermList = new PostingList();
+    }
+
+    public Term(String term, PostingList termList) {
+        this.term = term;
+        this.TermList = termList;
+    }
 
     public Term(String term) {
         this.term = term;
+        this.TermList = new PostingList();
     }
 
     public ArrayList<Posting> getPostingList() {
@@ -29,6 +40,14 @@ public class Term implements Comparable<Term>{
 
     public void setTerm(String term) {
         this.term = term;
+    }
+
+    public PostingList getTermList() {
+        return TermList;
+    }
+
+    public void setTermList(PostingList TermList) {
+        this.TermList = TermList;
     }
 
     @Override

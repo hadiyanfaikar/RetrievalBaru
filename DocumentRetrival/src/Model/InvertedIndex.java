@@ -21,7 +21,6 @@ public class InvertedIndex {
     public void addNewDocument(Document document) {
         getListOfDocument().add(document);
     }
-    
 
     public ArrayList<Posting> getUnsortedPostingList() {
         // cek untuk term yang muncul lebih dari 1 kali
@@ -304,7 +303,7 @@ public class InvertedIndex {
     public int getTermFrequency(String term, int idDoc) {
         Document doc = new Document();
         doc.setId(idDoc);
-        
+
         int Posting = Collections.binarySearch(listOfDocument, doc);
         if (Posting >= 0) {
             ArrayList<Posting> tempPosting = listOfDocument.get(Posting).getListOfPosting();
@@ -319,4 +318,22 @@ public class InvertedIndex {
 
         return 0;
     }
+
+    public ArrayList<Posting> MakeTFIDF(int idDoc) {
+        ArrayList<Term> terms = getDictionary();
+
+        ArrayList<Posting> result = new ArrayList<>();
+        for (int i = 0; i < terms.size(); i++) {
+            double weight = getTermFrequency(terms.get(i).getTerm(), idDoc) * getInverseDocumentFrequency(terms.get(i).getTerm());
+
+            Posting tempPosting = new Posting();
+            tempPosting.setTerm(terms.get(i).getTerm());
+            tempPosting.setWeight(weight);
+
+            result.add(tempPosting);
+        }
+
+        return result;
+    }
+
 }
