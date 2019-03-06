@@ -292,7 +292,8 @@ public class InvertedIndex {
             // jumlah dokumen dengan term i
             int ni = getDocumentFrequency(term);
             // idf = log10(N/ni)
-            return Math.log10(N / ni);
+            double nni = (double) N / ni;
+            return Math.log10(nni);
         } else {
             // term tidak ada
             // nilai idf = 0
@@ -320,20 +321,25 @@ public class InvertedIndex {
     }
 
     public ArrayList<Posting> MakeTFIDF(int idDoc) {
-        ArrayList<Term> terms = getDictionary();
+        Document doc = new Document();
+        doc.setId(idDoc);
 
-        ArrayList<Posting> result = new ArrayList<>();
-        for (int i = 0; i < terms.size(); i++) {
-            double weight = getTermFrequency(terms.get(i).getTerm(), idDoc) * getInverseDocumentFrequency(terms.get(i).getTerm());
+        int check = Collections.binarySearch(listOfDocument, doc);
+        if (check < 0) {
+            return null;
 
-            Posting tempPosting = new Posting();
-            tempPosting.setTerm(terms.get(i).getTerm());
-            tempPosting.setWeight(weight);
-
-            result.add(tempPosting);
+        } else {
+            doc = listOfDocument.get(check);
+            ArrayList<Posting> result = doc.getListOfPosting();
+            for (int i = 0; i < result.size(); i++) {
+                Posting temp = result.get(i);
+                double idf = getInverseDocumentFrequency(temp.getTerm());
+                int tf = temp.getNumberOfTerm();
+                double weight = tf * idf;
+                result.get(i).setWeight(weight);
+            }
+            return result;
         }
-
-        return result;
     }
 
     public Double getInnerProduct(ArrayList<Posting> p1, ArrayList<Posting> p2) {
