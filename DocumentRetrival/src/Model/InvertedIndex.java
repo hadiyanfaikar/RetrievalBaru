@@ -1,5 +1,5 @@
 package Model;
-  
+
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
@@ -105,7 +105,7 @@ public class InvertedIndex {
             return new ArrayList<>();
         }
 
-        ArrayList<Posting> postings = new ArrayList<>();
+        ArrayList<Posting> posting = new ArrayList<>();
         int p1Index = 0;
         int p2Index = 0;
 
@@ -115,7 +115,7 @@ public class InvertedIndex {
         while (true) {
             if (post1.getDocument().getId() == post2.getDocument().getId()) {
                 try {
-                    postings.add(post1);
+                    posting.add(post1);
                     p1Index++;
                     p2Index++;
                     post1 = p1.get(p1Index);
@@ -141,7 +141,7 @@ public class InvertedIndex {
                 }
             }
         }
-        return postings;
+        return posting;
     }
 
     public ArrayList<Posting> SearchOneWord(String word) {
