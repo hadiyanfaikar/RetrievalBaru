@@ -336,4 +336,11 @@ public class InvertedIndex {
         return result;
     }
 
+    public Double getInnerProduct(ArrayList<Posting> p1, ArrayList<Posting> p2) {
+        return 0.0;
+    }
+
+    public ArrayList<Posting> getQueryPosting(String query) {
+        return null;
+    }
 }

@@ -6,11 +6,11 @@ import Model.Posting;
 import Model.Term;
 import java.util.ArrayList;
 
-public class TestTFIDF6 {
+public class TestTFIDF7 {
 
     public static void main(String[] args) {
         // seting dokumen
-        Document doc1 = new Document(1, "shipment of gold damaged in a fire");
+        Document doc1 = new Document(1, "Shipment of gold damaged in a fire");
         Document doc2 = new Document(2, "delivery of silver arrived in a silver truck");
         Document doc3 = new Document(3, "shipment of gold arrived in a truck");
 
@@ -28,7 +28,7 @@ public class TestTFIDF6 {
         for (int i = 0; i < result.size(); i++) {
             System.out.println("Term = " + result.get(i).getTerm()
                     + ",numberOfDocument = " + result.get(i).getNumberOfDocument());
-            ArrayList<Posting> tempPosting = result.get(i).getTermList().getPosting();
+            ArrayList<Posting> tempPosting = result.get(i).getPostingList();
             for (int j = 0; j < tempPosting.size(); j++) {
                 System.out.println("id_doc = " + tempPosting.get(j).getDocument().getId()
                         + ", numberofTerm = " + tempPosting.get(j).getNumberOfTerm());
@@ -41,16 +41,25 @@ public class TestTFIDF6 {
         System.out.println("Number of Doc with " + tempString + " is " + result2);
 
         // idf
-        String tempString1 = "arrived";
+        String tempString1 = "silver";
         double result3 = index.getInverseDocumentFrequency(tempString1);
         System.out.println("IDF of " + tempString1 + " is " + result3);
 
         // tf
         // idf
-        String tempString2 = "fire";
-        int idDoc = 1;
+        String tempString2 = "truck";
+        int idDoc = 2;
         int result4 = index.getTermFrequency(tempString2, idDoc);
-        System.out.println("TF of " + tempString2 + " in idDoc =" + idDoc + " is " + result4);
+        System.out.println("TF of " + tempString2 + " in idDoc = " + idDoc + " is " + result4);
 
+        // make arraylist of TFIDF
+        idDoc = 1;
+        ArrayList<Posting> tempDocWeight = index.MakeTFIDF(idDoc);
+        for (int i = 0; i < tempDocWeight.size(); i++) {
+            Posting tempPost = tempDocWeight.get(i);
+            System.out.println("term= " + tempPost.getTerm()
+                    + ", tf = " + tempPost.getNumberOfTerm()
+                    + ", weight= " + tempPost.getWeight());
+        }
     }
 }
