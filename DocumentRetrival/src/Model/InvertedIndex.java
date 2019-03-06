@@ -1,5 +1,5 @@
 package Model;
-
+  
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
@@ -292,8 +292,8 @@ public class InvertedIndex {
             // jumlah dokumen dengan term i
             int ni = getDocumentFrequency(term);
             // idf = log10(N/ni)
-            double nni = (double) N / ni;
-            return Math.log10(nni);
+            double Nni = (double) N / ni;
+            return Math.log10(Nni);
         } else {
             // term tidak ada
             // nilai idf = 0
