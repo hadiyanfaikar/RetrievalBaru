@@ -105,7 +105,7 @@ public class InvertedIndex {
             return new ArrayList<>();
         }
 
-        ArrayList<Posting> postings = new ArrayList<>();
+        ArrayList<Posting> posting = new ArrayList<>();
         int p1Index = 0;
         int p2Index = 0;
 
@@ -115,7 +115,7 @@ public class InvertedIndex {
         while (true) {
             if (post1.getDocument().getId() == post2.getDocument().getId()) {
                 try {
-                    postings.add(post1);
+                    posting.add(post1);
                     p1Index++;
                     p2Index++;
                     post1 = p1.get(p1Index);
@@ -141,7 +141,7 @@ public class InvertedIndex {
                 }
             }
         }
-        return postings;
+        return posting;
     }
 
     public ArrayList<Posting> SearchOneWord(String word) {
@@ -292,8 +292,8 @@ public class InvertedIndex {
             // jumlah dokumen dengan term i
             int ni = getDocumentFrequency(term);
             // idf = log10(N/ni)
-            double nni = (double) N / ni;
-            return Math.log10(nni);
+            double Nni = (double) N / ni;
+            return Math.log10(Nni);
         } else {
             // term tidak ada
             // nilai idf = 0
