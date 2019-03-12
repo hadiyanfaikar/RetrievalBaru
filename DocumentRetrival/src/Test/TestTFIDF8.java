@@ -9,7 +9,6 @@ import java.util.ArrayList;
 public class TestTFIDF8 {
 
     public static void main(String[] args) {
-        // seting dokumen
         Document doc1 = new Document(1, "Shipment of gold damaged in a fire");
         Document doc2 = new Document(2, "delivery of silver arrived in a silver truck");
         Document doc3 = new Document(3, "shipment of gold arrived in a truck");
@@ -22,7 +21,7 @@ public class TestTFIDF8 {
         index.addNewDocument(doc3);
 
         // panggil fungsi search
-        index.MakeDictionaryWithTermNumber();
+        index.makeDictionaryWithTermNumber();
         ArrayList<Term> result = index.getDictionary();
         // tampilkan isi document dan id-nya
         for (int i = 0; i < result.size(); i++) {
@@ -82,10 +81,9 @@ public class TestTFIDF8 {
             System.out.println("term= " + tempPost.getTerm()
                     + ", tf = " + tempPost.getNumberOfTerm()
                     + ", weight= " + tempPost.getWeight());
-        }
-        // panggil fungsi inner product
-        double result1Product = index.getInnerProduct(queryPostingList, tempDocWeight);
-        System.out.println("Hasil inner product query dan doc1= " + result1Product);
 
+        }
+        double result1Product = index.getInnerProduct(queryPostingList, tempDocWeight);
+        System.out.println("Hasil inner product doc1 dan doc2 = " + resultProduct);
     }
 }
