@@ -7,6 +7,7 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.ListIterator;
 import java.util.function.Consumer;
+import Model.Posting;
 
 public class InvertedIndex {
 
@@ -204,7 +205,7 @@ public class InvertedIndex {
 
     }
 
-    public void makeDictionaryWithTermNumber() {
+    public void MakeDictionaryWithTermNumber() {
         // cek deteksi ada term yang frekuensinya lebih dari 
         // 1 pada sebuah dokumen
         // buat posting list term terurut
@@ -292,8 +293,8 @@ public class InvertedIndex {
             // jumlah dokumen dengan term i
             int ni = getDocumentFrequency(term);
             // idf = log10(N/ni)
-            double nni = (double) N / ni;
-            return Math.log10(nni);
+            double Nni = (double) N / ni;
+            return Math.log10(Nni);
         } else {
             // term tidak ada
             // nilai idf = 0
@@ -343,10 +344,29 @@ public class InvertedIndex {
     }
 
     public Double getInnerProduct(ArrayList<Posting> p1, ArrayList<Posting> p2) {
-        return 0.0;
+        double result = 0;
+        for (int i = 0; i < p1.size(); i++) {
+            int Posting = Collections.binarySearch(p2, p1.get(i));
+            if (Posting >= 0) {
+                result = result + (p1.get(i).getWeight() * p2.get(Posting).getWeight());
+            }
+        }
+        return result;
+
     }
 
     public ArrayList<Posting> getQueryPosting(String query) {
-        return null;
+        Document doc = new Document();
+        doc.setContent(query);
+
+        ArrayList<Posting> result = doc.getListOfPosting();
+        for (int i = 0; i < result.size(); i++) {
+            // weight = tf * idf
+            double weight = result.get(i).getNumberOfTerm() * getInverseDocumentFrequency(result.get(i).getTerm());
+
+            result.get(i).setWeight(weight);
+        }
+
+        return result;
     }
 }

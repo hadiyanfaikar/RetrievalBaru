@@ -23,7 +23,7 @@ public class TestTFIDF5 {
         index.addNewDocument(doc3);
 
         // panggil fungsi search
-        index.makeDictionaryWithTermNumber();
+        index.MakeDictionaryWithTermNumber();
         ArrayList<Term> result = index.getDictionary();
         // tampilkan isi document dan id-nya
         for (int i = 0; i < result.size(); i++) {
