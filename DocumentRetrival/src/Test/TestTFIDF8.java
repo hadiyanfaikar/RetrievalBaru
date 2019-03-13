@@ -70,8 +70,8 @@ public class TestTFIDF8 {
                     + ", tf = " + tempPost.getNumberOfTerm()
                     + ", weight= " + tempPost.getWeight());
         }
-        System.out.println("==========================================================");
         // panggil fungsi inner product
+        System.out.println("==========================================================");
         double resultProduct = index.getInnerProduct(temp1DocWeight, tempDocWeight);
         System.out.println("Hasil Inner Product doc1 dan doc2 = " + resultProduct);
         System.out.println("==========================================================");
@@ -83,8 +83,8 @@ public class TestTFIDF8 {
                     + ", tf = " + tempPost.getNumberOfTerm()
                     + ", weight= " + tempPost.getWeight());
         }
-        System.out.println("==========================================================");
         // panggil fungsi inner product
+        System.out.println("==========================================================");
         double result1Product = index.getInnerProduct(queryPostingList, tempDocWeight);
         System.out.println("Hasil Inner Product Query dan doc1= " + result1Product);
         System.out.println("==========================================================");

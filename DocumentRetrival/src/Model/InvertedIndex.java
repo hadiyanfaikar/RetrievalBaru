@@ -321,26 +321,6 @@ public class InvertedIndex {
     }
 
     public ArrayList<Posting> MakeTFIDF(int idDoc) {
-
-//        Document doc = new Document();
-//        doc.setId(idDoc);
-//
-//        int check = Collections.binarySearch(listOfDocument, doc);
-//        if (check < 0) {
-//            return null;
-//
-//        } else {
-//            doc = listOfDocument.get(check);
-//            ArrayList<Posting> result = doc.getListOfPosting();
-//            for (int i = 0; i < result.size(); i++) {
-//                Posting temp = result.get(i);
-//                double idf = getInverseDocumentFrequency(temp.getTerm());
-//                int tf = temp.getNumberOfTerm();
-//                double weight = tf * idf;
-//                result.get(i).setWeight(weight);
-//            }
-//            return result;
-//        }
         ArrayList<Posting> result = new ArrayList<Posting>();
         Document temp = new Document(idDoc);
         int cari = Collections.binarySearch(listOfDocument, temp);
@@ -362,37 +342,56 @@ public class InvertedIndex {
     }
 
     public Double getInnerProduct(ArrayList<Posting> p1, ArrayList<Posting> p2) {
+
+        Collections.sort(p2);
+        Collections.sort(p1);
+
         double result = 0;
         for (int i = 0; i < p1.size(); i++) {
             Posting temp = p1.get(i);
             boolean found = false;
-            for (int j = 0; j < p2.size(); j++) {
+            for (int j = 0; j < p2.size() && found == false; j++) {
                 Posting temp1 = p2.get(j);
                 if (temp1.getTerm().equalsIgnoreCase(temp.getTerm())) {
                     found = true;
-                    result = result + p1.get(i).getWeight() * p2.get(j).getWeight();
+                    result = result + p1.get(i).getWeight() * temp.getWeight();
                 }
             }
-//            int Posting = Collections.binarySearch(p2, p1.get(i));
-//            if (Posting >= 0) {
-//                result = result + (p1.get(i).getWeight() * p2.get(Posting).getWeight());
-//            }
         }
         return result;
     }
 
     public ArrayList<Posting> getQueryPosting(String query) {
-        Document doc = new Document();
-        doc.setContent(query);
-
-        ArrayList<Posting> result = doc.getListOfPosting();
+        Document temp = new Document(-1, query);
+        // buat posting list
+        ArrayList<Posting> result = temp.getListOfPosting();
+        // hitung bobot
+        // isi bobot dari posting list
         for (int i = 0; i < result.size(); i++) {
-            // weight = tf * idf
-            double weight = result.get(i).getNumberOfTerm() * getInverseDocumentFrequency(result.get(i).getTerm());
-
-            result.get(i).setWeight(weight);
+            // ambil term
+            String tempTerm = result.get(i).getTerm();
+            // cari idf
+            double idf = getInverseDocumentFrequency(tempTerm);
+            // cari tf
+            int tf = result.get(i).getNumberOfTerm();
+            // hitung bobot
+            double bobot = tf * idf;
+            // set bobot pada posting
+            result.get(i).setWeight(bobot);
         }
-
+        Collections.sort(result);
         return result;
+    }
+
+    public double lengthOfPosting(ArrayList<Posting> posting, ArrayList<Posting> posting1) {
+        return 0;
+    }
+
+    public ArrayList<Document> SearchTFIDF(String query) {
+        return null;
+    }
+
+    public ArrayList<Document> searchCosineSimilarity(String query) {
+        return null;
     }
 }
