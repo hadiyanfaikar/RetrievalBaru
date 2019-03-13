@@ -321,32 +321,69 @@ public class InvertedIndex {
     }
 
     public ArrayList<Posting> MakeTFIDF(int idDoc) {
-        Document doc = new Document();
-        doc.setId(idDoc);
 
-        int check = Collections.binarySearch(listOfDocument, doc);
-        if (check < 0) {
-            return null;
-
-        } else {
-            doc = listOfDocument.get(check);
-            ArrayList<Posting> result = doc.getListOfPosting();
+//        Document doc = new Document();
+//        doc.setId(idDoc);
+//
+//        int check = Collections.binarySearch(listOfDocument, doc);
+//        if (check < 0) {
+//            return null;
+//
+//        } else {
+//            doc = listOfDocument.get(check);
+//            ArrayList<Posting> result = doc.getListOfPosting();
+//            for (int i = 0; i < result.size(); i++) {
+//                Posting temp = result.get(i);
+//                double idf = getInverseDocumentFrequency(temp.getTerm());
+//                int tf = temp.getNumberOfTerm();
+//                double weight = tf * idf;
+//                result.get(i).setWeight(weight);
+//            }
+//            return result;
+//        }
+        ArrayList<Posting> result = new ArrayList<Posting>();
+        Document temp = new Document(idDoc);
+        int cari = Collections.binarySearch(listOfDocument, temp);
+        if (cari >= 0) {
+            temp = listOfDocument.get(cari);
+            result = temp.getListOfPosting();
             for (int i = 0; i < result.size(); i++) {
-                Posting temp = result.get(i);
-                double idf = getInverseDocumentFrequency(temp.getTerm());
-                int tf = temp.getNumberOfTerm();
-                double weight = tf * idf;
-                result.get(i).setWeight(weight);
+                String tempTerm = result.get(i).getTerm();
+                double idf = getInverseDocumentFrequency(tempTerm);
+                int tf = result.get(i).getNumberOfTerm();
+                double bobot = tf * idf;
+                result.get(i).setWeight(bobot);
             }
-            return result;
+            Collections.sort(result);
+        }else{
+            
         }
+        return result;
     }
 
     public Double getInnerProduct(ArrayList<Posting> p1, ArrayList<Posting> p2) {
-        return 0.0;
+        double result = 0;
+        for (int i = 0; i < p1.size(); i++) {
+            int Posting = Collections.binarySearch(p2, p1.get(i));
+            if (Posting >= 0) {
+                result = result + (p1.get(i).getWeight() * p2.get(Posting).getWeight());
+            }
+        }
+        return result;
     }
 
     public ArrayList<Posting> getQueryPosting(String query) {
-        return null;
+        Document doc = new Document();
+        doc.setContent(query);
+
+        ArrayList<Posting> result = doc.getListOfPosting();
+        for (int i = 0; i < result.size(); i++) {
+            // weight = tf * idf
+            double weight = result.get(i).getNumberOfTerm() * getInverseDocumentFrequency(result.get(i).getTerm());
+
+            result.get(i).setWeight(weight);
+        }
+
+        return result;
     }
 }
