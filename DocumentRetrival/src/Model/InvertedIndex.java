@@ -355,8 +355,8 @@ public class InvertedIndex {
                 result.get(i).setWeight(bobot);
             }
             Collections.sort(result);
-        }else{
-            
+        } else {
+
         }
         return result;
     }
@@ -366,7 +366,7 @@ public class InvertedIndex {
         for (int i = 0; i < p1.size(); i++) {
             int Posting = Collections.binarySearch(p2, p1.get(i));
             if (Posting >= 0) {
-
+                result = result + (p1.get(i).getWeight() * p2.get(Posting).getWeight());
             }
         }
         return result;
