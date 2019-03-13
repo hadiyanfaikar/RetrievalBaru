@@ -364,10 +364,19 @@ public class InvertedIndex {
     public Double getInnerProduct(ArrayList<Posting> p1, ArrayList<Posting> p2) {
         double result = 0;
         for (int i = 0; i < p1.size(); i++) {
-            int Posting = Collections.binarySearch(p2, p1.get(i));
-            if (Posting >= 0) {
-                result = result + (p1.get(i).getWeight() * p2.get(Posting).getWeight());
+            Posting temp = p1.get(i);
+            boolean found = false;
+            for (int j = 0; j < p2.size(); j++) {
+                Posting temp1 = p2.get(j);
+                if (temp1.getTerm().equalsIgnoreCase(temp.getTerm())) {
+                    found = true;
+                    result = result + p1.get(i).getWeight() * p2.get(j).getWeight();
+                }
             }
+//            int Posting = Collections.binarySearch(p2, p1.get(i));
+//            if (Posting >= 0) {
+//                result = result + (p1.get(i).getWeight() * p2.get(Posting).getWeight());
+//            }
         }
         return result;
     }
