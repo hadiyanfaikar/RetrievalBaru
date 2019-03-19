@@ -36,7 +36,7 @@ public class TestTFIDF9 {
 
         System.out.println("Length of Document = " + index.getLengthOfPosting(tempDocWeight));
 
-        String query = "Shipment damaged fire";
+        String query = "silver gold truck";
         System.out.println("Query = " + query);
         ArrayList<Posting> queryPostingList = index.getQueryPosting(query);
         for (int i = 0; i < queryPostingList.size(); i++) {

@@ -70,11 +70,11 @@ public class TestTFIDF8 {
                     + ", tf = " + tempPost.getNumberOfTerm()
                     + ", weight= " + tempPost.getWeight());
         }
-
         // panggil fungsi inner product
+        System.out.println("==========================================================");
         double resultProduct = index.getInnerProduct(temp1DocWeight, tempDocWeight);
-        System.out.println("Hasil inner product doc1 dan doc2 = " + resultProduct);
-
+        System.out.println("Hasil Inner Product doc1 dan doc2 = " + resultProduct);
+        System.out.println("==========================================================");
         //panggil fungsi buat postinglist dar sebuah query
         ArrayList<Posting> queryPostingList = index.getQueryPosting("silver gold truck");
         for (int i = 0; i < queryPostingList.size(); i++) {
@@ -84,8 +84,10 @@ public class TestTFIDF8 {
                     + ", weight= " + tempPost.getWeight());
         }
         // panggil fungsi inner product
+        System.out.println("==========================================================");
         double result1Product = index.getInnerProduct(queryPostingList, tempDocWeight);
-        System.out.println("Hasil inner product query dan doc1= " + result1Product);
+        System.out.println("Hasil Inner Product Query dan doc1= " + result1Product);
+        System.out.println("==========================================================");
 
     }
 }
