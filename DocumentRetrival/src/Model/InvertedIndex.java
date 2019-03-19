@@ -342,12 +342,27 @@ public class InvertedIndex {
         }
     }
 
+    public ArrayList<Posting> MakeQueryTFIDF(String query) {
+        Document doc = new Document();
+        doc.setContent(query);
+
+        ArrayList<Posting> result = doc.getListOfPosting();
+        for (int i = 0; i < result.size(); i++) {
+            // weight = tf * idf
+            double weight = result.get(i).getNumberOfTerm() * getInverseDocumentFrequency(result.get(i).getTerm());
+
+            result.get(i).setWeight(weight);
+        }
+
+        return result;
+    }
+
     public Double getInnerProduct(ArrayList<Posting> p1, ArrayList<Posting> p2) {
         double result = 0;
         for (int i = 0; i < p1.size(); i++) {
             int Posting = Collections.binarySearch(p2, p1.get(i));
             if (Posting >= 0) {
-                result = result + (p1.get(i).getWeight()* p2.get(Posting).getWeight());
+                result = result + (p1.get(i).getWeight() * p2.get(Posting).getWeight());
             }
         }
         return result;
@@ -366,5 +381,48 @@ public class InvertedIndex {
         }
 
         return result;
+    }
+
+    public double getLengthOfPosting(ArrayList<Posting> Posting) {
+        double length = 0;
+        for (int i = 0; i < Posting.size(); i++) {
+            length += Posting.get(i).getWeight() * Posting.get(i).getWeight();
+        }
+
+        return Math.sqrt(length);
+    }
+
+    public double getCosineSimilarity(ArrayList<Posting> posting,
+            ArrayList<Posting> posting1) {
+
+        double InnerProduct = getInnerProduct(posting, posting1);
+        double lengthPosting = getLengthOfPosting(posting) * getLengthOfPosting(posting1);
+        double cosineSimilarity = InnerProduct / lengthPosting;
+
+        return cosineSimilarity;
+    }
+
+    public ArrayList<SearchingResult> SearchTFIDF(String query) {
+        ArrayList<SearchingResult> searchingResults = new ArrayList<>();
+        ArrayList<Posting> queryTFIDF = MakeQueryTFIDF(query);
+        for (int i = 0; i < getDocumentFrequency(query); i++) {
+            ArrayList<Posting> documentTFIDF = MakeTFIDF(listOfDocument.get(i).getId());
+            double similarity = getInnerProduct(queryTFIDF, documentTFIDF);
+            searchingResults.add(new SearchingResult(similarity, listOfDocument.get(i)));
+        }
+        Collections.sort(searchingResults, Collections.reverseOrder());
+        return searchingResults;
+    }
+
+    public ArrayList<SearchingResult> SearchCosineSimilarity(String query) {
+        ArrayList<SearchingResult> searchingResults = new ArrayList<>();
+        ArrayList<Posting> queryTFIDF = MakeQueryTFIDF(query);
+        for (int i = 0; i < getDocumentFrequency(query); i++) {
+            ArrayList<Posting> DocumentTFIDF = MakeTFIDF(listOfDocument.get(i).getId());
+            double similarity = getCosineSimilarity(queryTFIDF, DocumentTFIDF);
+            searchingResults.add(new SearchingResult(similarity, listOfDocument.get(i)));
+        }
+        Collections.sort(searchingResults, Collections.reverseOrder());
+        return searchingResults;
     }
 }
