@@ -1,5 +1,6 @@
 package Model;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
@@ -383,15 +384,116 @@ public class InvertedIndex {
         return result;
     }
 
-    public double lengthOfPosting(ArrayList<Posting> posting, ArrayList<Posting> posting1) {
-        return 0;
+    public ArrayList<Posting> MakeQueryTFIDF(String query) {
+        Document doc = new Document();
+        doc.setContent(query);
+        ArrayList<Posting> result = doc.getListOfPosting();
+        for (int i = 0; i < result.size(); i++) {
+            // weight = tf * idf
+            double weight = result.get(i).getNumberOfTerm() * getInverseDocumentFrequency(result.get(i).getTerm());
+            result.get(i).setWeight(weight);
+        }
+        return result;
     }
 
-    public ArrayList<Document> SearchTFIDF(String query) {
-        return null;
+    public ArrayList<Posting> getPostingQuery(String query) {
+        Document temp = new Document(-1, query);
+        // buat posting list
+        ArrayList<Posting> result = temp.getListOfPosting();
+        // hitung bobot
+        // isi bobot dari posting list
+        for (int i = 0; i < result.size(); i++) {
+            // ambil term
+            String tempTerm = result.get(i).getTerm();
+            // cari idf
+            double idf = getInverseDocumentFrequency(tempTerm);
+            // cari tf
+            int tf = result.get(i).getNumberOfTerm();
+            // hitung bobot
+            double bobot = tf * idf;
+            // set bobot pada posting
+            result.get(i).setWeight(bobot);
+        }
+        Collections.sort(result);
+        return result;
     }
 
-    public ArrayList<Document> searchCosineSimilarity(String query) {
-        return null;
+    public double getLengthOfPosting(ArrayList<Posting> posting) {
+        double length = 0;
+        for (int i = 0; i < posting.size(); i++) {
+            length += posting.get(i).getWeight() * posting.get(i).getWeight();
+        }
+
+        return Math.sqrt(length);
+    }
+
+    public double getCosineSimilarity(ArrayList<Posting> posting, ArrayList<Posting> posting1) {
+        // cari jarak antara posting dan posting 1
+        double jarak = getInnerProduct(posting, posting1);
+        // cari panjang posting
+        double panjang_posting = getLengthOfPosting(posting);
+        // cari panjang posting1
+        double panjang_posting1 = getLengthOfPosting(posting1);
+        // hitung cosine similarity
+        double result = jarak / Math.sqrt(panjang_posting * panjang_posting1);
+        return result;
+    }
+
+    public ArrayList<SearchingResult> SearchTFIDF(String query) {
+        // buat list search document
+        ArrayList<SearchingResult> result = new ArrayList<SearchingResult>();
+        // ubah query menjadi array list posting
+        ArrayList<Posting> queryPostingList = getQueryPosting(query);
+        // buat posting list untuk seluruh dokumen
+        for (int i = 0; i < listOfDocument.size(); i++) {
+            // ambil obyek dokumen
+            Document doc = listOfDocument.get(i);
+            int idDoc = doc.getId();
+            // buat posting list untuk dokumen
+            ArrayList<Posting> tempDocWeight = MakeTFIDF(idDoc);
+            // hitung jarak antar posting list dokumen dengan posting list query
+            double hasilDotProduct = getInnerProduct(tempDocWeight, queryPostingList);
+            // isi result list
+            if (hasilDotProduct > 0) {
+                // buat obyek document hasil cari
+                SearchingResult resultDoc = new SearchingResult(hasilDotProduct, doc);
+                // tambahkan ke list hasil cari
+                result.add(resultDoc);
+            }
+        }
+        // urutkan hasil cari
+        Collections.sort(result);
+        return result;
+    }
+
+    public ArrayList<SearchingResult> SearchCosineSimilarity(String query) {
+        // buat list search document
+        ArrayList<SearchingResult> result = new ArrayList<SearchingResult>();
+        // ubah query menjadi array list posting
+        ArrayList<Posting> queryPostingList = getQueryPosting(query);
+        // buat posting list untuk seluruh dokumen
+        for (int i = 0; i < listOfDocument.size(); i++) {
+            // ambil obyek dokumen
+            Document doc = listOfDocument.get(i);
+            int idDoc = doc.getId();
+            // buat posting list untuk dokumen
+            ArrayList<Posting> tempDocWeight = MakeTFIDF(idDoc);
+            // hitung cosin similarity antar posting list dokumen dengan posting list query
+            double cosineSimilarity = getCosineSimilarity(tempDocWeight, queryPostingList);
+            // isi result list
+            if (cosineSimilarity > 0) {
+                // buat obyek document hasil cari
+                SearchingResult resultDoc = new SearchingResult(cosineSimilarity, doc);
+                // tambahkan ke list hasil cari
+                result.add(resultDoc);
+            }
+        }
+        // urutkan hasil cari
+        Collections.sort(result);
+        return result;
+    }
+
+    public void readDirectory(File directory) {
+
     }
 }

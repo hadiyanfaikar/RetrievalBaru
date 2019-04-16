@@ -1,13 +1,10 @@
 package Model;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.StringTokenizer;
 
-/**
- *
- * @author admin
- */
 public class Document implements Comparable<Document> {
 
     public Document(int id) {
@@ -100,4 +97,9 @@ public class Document implements Comparable<Document> {
         return id - doc.getId();
     }
 
+    public void readFile(int idDoc, File file) {
+        // simpan idDoc
+        this.id = idDoc;
+        // baca file
+    }
 }
