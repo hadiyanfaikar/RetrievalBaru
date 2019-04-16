@@ -97,7 +97,7 @@ public class Document implements Comparable<Document> {
         return id - doc.getId();
     }
 
-    public void readFile(int idDoc, File file) {
+   public void readFile(int idDoc, File file){
         // simpan idDoc
         this.id = idDoc;
         // baca file

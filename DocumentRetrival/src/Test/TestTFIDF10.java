@@ -1,4 +1,5 @@
 
+
 package Test;
 
 import Model.Document;
@@ -41,4 +42,5 @@ public class TestTFIDF10 {
         }
 
     } 
+
 }

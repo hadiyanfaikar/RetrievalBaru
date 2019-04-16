@@ -1,10 +1,14 @@
 package Test;
 
+
 import Model.Document;
 import Model.InvertedIndex;
 import Model.Posting;
 import java.util.ArrayList;
 
+
+
+ 
 public class TestTFIDF9 {
 
     public static void main(String[] args) {
@@ -50,4 +54,6 @@ public class TestTFIDF9 {
         System.out.println("Cosine Similarity = " + index.getCosineSimilarity(queryPostingList,
                 tempDocWeight));
     }
+
+
 }
