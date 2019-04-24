@@ -5,15 +5,17 @@ import org.apache.lucene.analysis.id.IndonesianStemmer;
 public class TestIndonesiaStemmer {
 
     public static void main(String[] args) {
-        IndonesianStemmer stem = new IndonesianStemmer();
-        String term = "membunuh";
+        IndonesianStemmer analyzer = new IndonesianStemmer();
+        String term = "menaikkan";
         char stemTerm[] = term.toCharArray();
-        int hasil = stem.stem(stemTerm, term.length(), true);
+        int hasil = analyzer.stem(stemTerm, term.length(), true);
         System.out.println(hasil);
         System.out.println(stemTerm);
-        String temp = stemTerm.toString();
-        String result = temp.substring(0, hasil);
-        System.out.println(temp);
+        char stemResult[] = new char[hasil];
+        for (int i = 0; i < hasil; i++) {
+            stemResult[i] = stemTerm[i];
+            System.out.println(hasil);
+        }
 
     }
 }
