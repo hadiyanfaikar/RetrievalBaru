@@ -179,4 +179,8 @@ public class Document implements Comparable<Document> {
         }
         content = sb.toString();
     }
+
+    public void IndonesiaStemming() {
+
+    }
 }
