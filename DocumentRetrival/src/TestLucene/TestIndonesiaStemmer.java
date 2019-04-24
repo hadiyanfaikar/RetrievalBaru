@@ -11,8 +11,9 @@ public class TestIndonesiaStemmer {
         int hasil = stem.stem(stemTerm, term.length(), true);
         System.out.println(hasil);
         System.out.println(stemTerm);
-        String result = stemTerm.toString();
-        result = result.substring(0, hasil);
-        System.out.println(result.toString());
+        String temp = stemTerm.toString();
+        String result = temp.substring(0, hasil);
+        System.out.println(temp);
+
     }
 }
