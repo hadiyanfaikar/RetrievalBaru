@@ -1,4 +1,4 @@
-package Test;
+package TestLucene;
 
 import Model.Document;
 
