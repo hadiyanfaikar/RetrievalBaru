@@ -3,24 +3,25 @@ package TestLucene;
 import java.io.StringReader;
 import org.apache.lucene.analysis.Analyzer;
 import org.apache.lucene.analysis.CharArraySet;
-import org.apache.lucene.analysis.StopFilter;
 import org.apache.lucene.analysis.TokenStream;
+import org.apache.lucene.analysis.core.StopFilter;
 import org.apache.lucene.analysis.en.EnglishAnalyzer;
+import org.apache.lucene.analysis.id.IndonesianAnalyzer;
 import org.apache.lucene.analysis.standard.StandardAnalyzer;
-import org.apache.lucene.analysis.standard.StandardTokenizer;
 import org.apache.lucene.analysis.tokenattributes.CharTermAttribute;
 import org.apache.lucene.util.Version;
 
-public class TestStopWordToken {
+public class TestIndonesiaStopWordandStemming {
 
-   public static void main(String[] args) {
-        String text = "He was a man with gun used for killing many people.";
-        System.out.println("Text = "+text);
+    public static void main(String[] args) {
+        String text = "Dia sedang pergi berbelanja di pusat perbelanjaan. "
+                + "Namun, ibunya melarangnya pergi kesana karena tempat itu sangat berbahaya.";
+        System.out.println("Text = " + text);
         Version matchVersion = Version.LUCENE_7_7_0; // Substitute desired Lucene version for XY
-        Analyzer analyzer = new EnglishAnalyzer();
+        Analyzer analyzer = new IndonesianAnalyzer();
         analyzer.setVersion(matchVersion);
         // ambil stopwords
-        CharArraySet stopWords = EnglishAnalyzer.getDefaultStopSet();
+        CharArraySet stopWords = IndonesianAnalyzer.getDefaultStopSet();
         // buat token
         TokenStream tokenStream = analyzer.tokenStream(
                 "myField",
@@ -40,6 +41,7 @@ public class TestStopWordToken {
             System.out.println("Exception: " + ex);
         }
         String newText = sb.toString();
-        System.out.println("New Text = "+newText);
+        System.out.println("New Text = " + newText);
+
     }
 }

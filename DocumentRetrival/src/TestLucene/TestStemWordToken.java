@@ -1,4 +1,4 @@
-package Test;
+package TestLucene;
 
 import java.io.StringReader;
 import org.apache.lucene.analysis.Analyzer;
