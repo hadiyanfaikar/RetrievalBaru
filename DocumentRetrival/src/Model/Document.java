@@ -3,14 +3,16 @@ package Model;
 import java.io.File;
 import java.io.StringReader;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Collections;
 import java.util.StringTokenizer;
 import org.apache.lucene.analysis.Analyzer;
 import org.apache.lucene.analysis.CharArraySet;
-import org.apache.lucene.analysis.StopFilter;
 import org.apache.lucene.analysis.TokenStream;
+import org.apache.lucene.analysis.core.StopFilter;
 import org.apache.lucene.analysis.en.EnglishAnalyzer;
 import org.apache.lucene.analysis.en.PorterStemFilter;
+import org.apache.lucene.analysis.id.IndonesianAnalyzer;
 import org.apache.lucene.analysis.standard.StandardAnalyzer;
 import org.apache.lucene.analysis.tokenattributes.CharTermAttribute;
 import org.apache.lucene.util.Version;
@@ -18,8 +20,8 @@ import org.apache.lucene.util.Version;
 public class Document implements Comparable<Document> {
 
     private int id;
-    private String content;
-    private String realContent;
+    private String content; // atribut content yang dianalisis
+    private String realContent; // atribut content asli
 
     public Document() {
     }
@@ -39,28 +41,32 @@ public class Document implements Comparable<Document> {
         this.realContent = content;
     }
 
+    /**
+     * @return the content
+     */
     public String getContent() {
         return content;
     }
 
+    /**
+     * @param content the content to set
+     */
     public void setContent(String content) {
         this.content = content;
     }
 
+    /**
+     * @return the id
+     */
     public int getId() {
         return id;
     }
 
+    /**
+     * @param id the id to set
+     */
     public void setId(int id) {
         this.id = id;
-    }
-
-    public String getRealContent() {
-        return realContent;
-    }
-
-    public void setRealContent(String realContent) {
-        this.realContent = realContent;
     }
 
     public String[] getListofTerm() {
@@ -69,7 +75,7 @@ public class Document implements Comparable<Document> {
         return value.split(" ");
     }
 
-    public ArrayList<Posting> getListOfPosting() {
+    public ArrayList<Posting> getListofPosting() {
         // panggil fungsi getListOfTerm
         String tempString[] = getListofTerm();
         // buat objek ArrayList<Posting> result untuk menampung hasil
@@ -118,12 +124,24 @@ public class Document implements Comparable<Document> {
         return id - doc.getId();
     }
 
+    /**
+     * Fungsi untuk membaca sebuah file *.txt dan hasil baca dimasukkan ke
+     * atribut content
+     */
     public void readFile(int idDoc, File file) {
         // simpan idDoc
         this.id = idDoc;
         // baca file
     }
 
+    @Override
+    public String toString() {
+        return "Document{" + "id=" + id + ", content=" + content + ", realContent=" + realContent + '}';
+    }
+
+    /**
+     * Fungsi untuk menghilangkan kata stop word
+     */
     public void removeStopWords() {
         // asumsi content sudah ada
         String text = content;
@@ -153,6 +171,9 @@ public class Document implements Comparable<Document> {
         content = sb.toString();
     }
 
+    /**
+     * Fungsi untuk menghilangkan stop word dan stemming
+     */
     public void stemming() {
         String text = content;
 //        System.out.println("Text = "+text);
@@ -180,7 +201,42 @@ public class Document implements Comparable<Document> {
         content = sb.toString();
     }
 
-    public void IndonesiaStemming() {
+    public String getRealContent() {
+        return realContent;
+    }
 
+    public void setRealContent(String realContent) {
+        this.realContent = realContent;
+    }
+
+    public void IndonesiaStemming() {
+        String text = content;
+//        System.out.println("Text = "+text);
+        Version matchVersion = Version.LUCENE_7_7_0; // Substitute desired Lucene version for XY
+        StringReader tReader = new StringReader(text);
+        IndonesianAnalyzer analyzer = new IndonesianAnalyzer();
+        TokenStream tStream = analyzer.tokenStream("content", tReader);
+
+        // buat token
+        TokenStream tokenStream = analyzer.tokenStream(
+                "myField",
+                new StringReader(text.trim()));
+        // stemming
+        tokenStream = new PorterStemFilter(tokenStream);
+        // buat string baru tanpa stopword
+        StringBuilder sb = new StringBuilder();
+        CharTermAttribute charTermAttribute = tokenStream.addAttribute(CharTermAttribute.class);
+        try {
+            tokenStream.reset();
+            while (tokenStream.incrementToken()) {
+                String term = charTermAttribute.toString();
+                sb.append(term + " ");
+            }
+        } catch (Exception ex) {
+            System.out.println("Exception: " + ex);
+        }
+        content = sb.toString();
     }
 }
+
+

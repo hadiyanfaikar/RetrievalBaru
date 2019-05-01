@@ -56,7 +56,7 @@ public class InvertedIndex {
         for (int i = 0; i < getListOfDocument().size(); i++) {
             // buat listOfTerm dari document ke -i
             //String[] termResult = getListOfDocument().get(i).getListofTerm();
-            ArrayList<Posting> postingDocument = getListOfDocument().get(i).getListOfPosting();
+            ArrayList<Posting> postingDocument = getListOfDocument().get(i).getListofPosting();
             // loop sebanyak term dari document ke i
             for (int j = 0; j < postingDocument.size(); j++) {
                 // ambil objek posting
@@ -293,7 +293,7 @@ public class InvertedIndex {
 
         int Posting = Collections.binarySearch(listOfDocument, doc);
         if (Posting >= 0) {
-            ArrayList<Posting> tempPosting = listOfDocument.get(Posting).getListOfPosting();
+            ArrayList<Posting> tempPosting = listOfDocument.get(Posting).getListofPosting();
             Posting posting = new Posting();
             posting.setTerm(term);
             int postingIndex = Collections.binarySearch(tempPosting, posting);
@@ -312,7 +312,7 @@ public class InvertedIndex {
         int cari = Collections.binarySearch(listOfDocument, temp);
         if (cari >= 0) {
             temp = listOfDocument.get(cari);
-            result = temp.getListOfPosting();
+            result = temp.getListofPosting();
             for (int i = 0; i < result.size(); i++) {
                 String tempTerm = result.get(i).getTerm();
                 double idf = getInverseDocumentFrequency(tempTerm);
@@ -330,7 +330,7 @@ public class InvertedIndex {
     public ArrayList<Posting> MakeQueryTFIDF(String query) {
         Document doc = new Document();
         doc.setContent(query);
-        ArrayList<Posting> result = doc.getListOfPosting();
+        ArrayList<Posting> result = doc.getListofPosting();
         for (int i = 0; i < result.size(); i++) {
             // weight = tf * idf
             double weight = result.get(i).getNumberOfTerm() * getInverseDocumentFrequency(result.get(i).getTerm());
@@ -362,7 +362,7 @@ public class InvertedIndex {
     public ArrayList<Posting> getQueryPosting(String query) {
         Document temp = new Document(-1, query);
         // buat posting list
-        ArrayList<Posting> result = temp.getListOfPosting();
+        ArrayList<Posting> result = temp.getListofPosting();
         // hitung bobot
         // isi bobot dari posting list
         for (int i = 0; i < result.size(); i++) {
