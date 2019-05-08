@@ -54,4 +54,9 @@ public class Term implements Comparable<Term> {
     public int compareTo(Term o) {
         return term.compareToIgnoreCase(o.getTerm());
     }
+
+    @Override
+    public String toString() {
+        return "Term{" + "term=" + term + ", postingList=" + PostingList + '}';
+    }
 }

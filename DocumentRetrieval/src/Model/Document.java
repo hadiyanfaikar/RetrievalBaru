@@ -1,11 +1,14 @@
 package Model;
 
 import java.io.File;
+import java.io.IOException;
 import java.io.StringReader;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.StringTokenizer;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import org.apache.lucene.analysis.Analyzer;
 import org.apache.lucene.analysis.CharArraySet;
 import org.apache.lucene.analysis.TokenStream;
@@ -16,6 +19,8 @@ import org.apache.lucene.analysis.id.IndonesianAnalyzer;
 import org.apache.lucene.analysis.standard.StandardAnalyzer;
 import org.apache.lucene.analysis.tokenattributes.CharTermAttribute;
 import org.apache.lucene.util.Version;
+import org.apache.pdfbox.pdmodel.PDDocument;
+import org.apache.pdfbox.util.PDFTextStripper;
 
 public class Document implements Comparable<Document> {
 
@@ -237,6 +242,24 @@ public class Document implements Comparable<Document> {
         }
         content = sb.toString();
     }
+
+    public void ReadPDFFile(File PDFFile) {
+        try {
+            //Loading an existing document
+            PDDocument document = null;
+            document = PDDocument.load(PDFFile);
+
+            //Instantiate PDFTextStripper class
+            PDFTextStripper pdfStripper = new PDFTextStripper();
+
+            //Retrieving text from PDF document
+            String text = pdfStripper.getText(document);
+//            System.out.println(text);
+            realContent = text;
+            //Closing the document
+            document.close();
+        } catch (IOException ex) {
+            Logger.getLogger(Document.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
 }
-
-
