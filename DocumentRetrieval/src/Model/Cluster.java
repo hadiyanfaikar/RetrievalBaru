@@ -5,10 +5,13 @@
  */
 package Model;
 
+import java.util.ArrayList;
+
 /**
  *
  * @author admin
  */
 public class Cluster {
+    private ArrayList<Document> member = new ArrayList<Document>();
     
 }
